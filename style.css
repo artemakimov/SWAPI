@@ -51,12 +51,58 @@ body {
   align-items: center;
 }
 
+.main__form{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-bottom: 30px;
+}
+
+.main__search{
+  border: 2px;
+  border-radius: 20px;
+  width: 40%;
+  height: 40px;
+  padding: 5px;
+}
+
+.main__button{
+  font-size: 30px;
+  font-family: "Bebas Neue", cursive;
+  border: 2px;
+  border-radius: 20px;
+  margin-left: 10px;
+  height: 40px;
+  width: 20%;
+  background-color: rgb(8, 191, 252);
+  border-radius: 20px;
+  transition: all 0.3s linear;
+}
+
+.main__button:hover{
+  color: #f7d62f;
+  background-color: rgb(255, 0, 0);
+  transition: all 0.3s linear;
+}
+
+.main_err{
+  color: white;
+  font-size: 40px;
+  font-family: "Bebas Neue", cursive;
+}
+
 #charactersList {
   display: flex;
   width: 90%;
   justify-content: center;
   flex-wrap: wrap;
   gap: 10px;
+  align-items: flex-start;
+}
+
+.hideInfo {
+  display: none;
 }
 
 .charItem {
@@ -69,10 +115,29 @@ body {
   text-align: center;
 }
 
-.charInfo {
+.charInfo, .charInfoMain{
   color: aliceblue;
   font-size: 25px;
   font-family: "Bebas Neue", cursive;
+}
+
+.charButtons{
+  height: 40px;
+  font-size: 15px;
+  font-weight: bold;
+  width: 50%;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  background-color: rgb(8, 191, 252);
+  border: 2px;
+  border-radius: 20px;
+  transition: all 0.3s linear;
+}
+
+.charButtons:hover{
+  color: rgb(242, 255, 0);
+  width: 100%;
+  background-color: rgb(255, 0, 0);
+  transition: all 0.3s linear;
 }
 
 .selectedtext {
@@ -101,7 +166,7 @@ body {
   border-radius: 80px;
   padding: 4px 6px;
   font-size: 30px;
-  background-color: #08bffc;
+  background-color: rgb(8, 191, 252);
   transition: all 0.3s;
 }
 
@@ -133,6 +198,20 @@ body {
     align-content: center;
     width: 100%;
   }
+
+  .main__form{
+    flex-direction: column;
+  }
+
+  .main__button{
+    margin-left: 0;
+    margin-top: 10px;
+    width: 40%
+  }
+
+  .main__search{
+    width: 100%;
+  }
 }
 
 @media (max-width: 450px) {
@@ -140,3 +219,9 @@ body {
     font-size: 60px;
   }
 }
+
+
+
+
+
+
