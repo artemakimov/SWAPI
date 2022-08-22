@@ -4,10 +4,12 @@ let searchForm = document.getElementById("search");
 
 let activePagbutton;
 let getFullSwapiWebsite;
+let boolURL = true;
 
 searchForm.addEventListener("submit", showSearchedData);
 document.addEventListener("DOMContentLoaded", postListcharactersList);
 pagNavBar.addEventListener("click", showItems);
+
 function addCharInfo(inf) {
   let {
     name,
@@ -38,32 +40,45 @@ function addCharInfo(inf) {
 async function postListcharactersList() {
   let pageNum = "";
   let pageFullHREF = document.location.href;
+  
 
   charactersList.innerHTML = "";
 
-  if (pageFullHREF.indexOf("=") != -1) {
-    pageNum = pageFullHREF.substring(pageFullHREF.indexOf("=") + 1);
+  if (pageFullHREF.indexOf("page") != -1) {
+    pageNum = pageFullHREF.substring(pageFullHREF.indexOf("page") + 5);
+
     getFullSwapiWebsite = "https://swapi.dev/api/people/" + `?page=${pageNum}`;
   } else {
+    getFullSwapiWebsite = "https://swapi.dev/api/people/" + `?page=1`;
+  }
+
+  if (boolURL == false){
     getFullSwapiWebsite = "https://swapi.dev/api/people/" + `?page=1`;
   }
   let siteData = await getSiteContent(getFullSwapiWebsite);
 
   let pagecharactersList = siteData.count / 9;
 
-  createPaginationcharactersList(pagecharactersList, true);
 
-  if (pageNum) {
-    for (let li of pagNavBar.children) {
-      if (li.textContent == pageNum) {
-        activePagbutton = li;
-        activePagbutton.classList.add("activePagbutton");
+  createPaginationcharactersList(pagecharactersList, true);
+  if (boolURL){
+    if (pageNum) {
+      for (let li of pagNavBar.children) {
+        if (li.textContent == pageNum) {
+          activePagbutton = li;
+          activePagbutton.classList.add("activePagbutton");
+        }
       }
+    } else {
+      activePagbutton = pagNavBar.firstElementChild;
+      activePagbutton.classList.add("activePagbutton");
     }
-  } else {
+  } else{
     activePagbutton = pagNavBar.firstElementChild;
     activePagbutton.classList.add("activePagbutton");
+    boolURL = true;
   }
+
 
   replenishmentList(getFullSwapiWebsite);
 
@@ -146,10 +161,11 @@ async function showSearchedData(e) {
       );
       let pageItems = Math.ceil(siteDataArr.count / 10);
 
-      createPaginationcharactersList(pageItems, false);
-      searchForm.reset();
+      createPaginationcharactersList(pageItems, true);
+
     } else {
       let pageItems = Math.ceil(siteDataArr.count / 10);
+
 
       createPaginationcharactersList(pageItems, false);
 
@@ -160,11 +176,11 @@ async function showSearchedData(e) {
 
       showHideButtons();
 
-      searchForm.reset();
     }
   } else {
+    boolURL = false;
+    searchForm.reset();
     postListcharactersList();
-    showItems();
     showHideButtons();
   }
 }
@@ -182,6 +198,8 @@ async function showItems(e) {
       "https://swapi.dev/api/people/" + `?page=${e.target.textContent}`;
 
     await replenishmentList(getFullSwapiWebsite);
+
+
 
     document.body.scrollTop = document.documentElement.scrollTop = 0;
 
